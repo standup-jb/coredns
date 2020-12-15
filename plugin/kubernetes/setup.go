@@ -25,7 +25,7 @@ import (
 	"k8s.io/klog"
 )
 
-const pluginName = "nickname-kubernetes"
+const pluginName = "kubernetes"
 
 var log = clog.NewWithPlugin(pluginName)
 

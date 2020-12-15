@@ -86,5 +86,5 @@ func (k Kubernetes) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.M
 }
 
 // Name implements the Handler interface.
-func (k Kubernetes) Name() string { return "nickname-kubernetes"
+func (k Kubernetes) Name() string { return "kubernetes"
 }
