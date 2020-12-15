@@ -2,6 +2,7 @@ package kubernetes
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/coredns/coredns/plugin"
 	"github.com/coredns/coredns/request"
@@ -14,6 +15,7 @@ func (k Kubernetes) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.M
 	state := request.Request{W: w, Req: r}
 
 	qname := state.QName()
+	fmt.Printf("Kubernets server dns %s \n",qname)
 	zone := plugin.Zones(k.Zones).Matches(qname)
 	if zone == "" {
 		return plugin.NextOrFailure(k.Name(), k.Next, ctx, w, r)
