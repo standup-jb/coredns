@@ -374,6 +374,20 @@ func (k *Kubernetes) findPods(r recordRequest, zone string) (pods []msg.Service,
 			err = nil
 		}
 	}
+
+	// 处理 {APP_NAME}-{NUM} 情况。这里是特殊的处理
+	for _, p:= range k.APIConn.PodNicknameIndex(podname){
+		// If namespace has a wildcard, filter results against Corefile namespace list.
+		if wildcard(namespace) && !k.namespaceExposed(p.Namespace) {
+			continue
+		}
+		if podname == p.Nickname {
+			s := msg.Service{Key: strings.Join([]string{zonePath, Pod, namespace, podname}, "/"), Host: p.PodIP, TTL: k.ttl}
+			pods = append(pods, s)
+			err = nil
+		}
+	}
+
 	return pods, err
 }
 

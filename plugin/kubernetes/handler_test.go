@@ -536,6 +536,18 @@ func (APIConnServeTest) PodIndex(ip string) []*object.Pod {
 	return a
 }
 
+
+func (APIConnServeTest) PodNicknameIndex(nickname string) []*object.Pod{
+	return []*object.Pod{
+		{
+			Namespace:"default",
+			Name:"api-manager-backend-1-xxx",
+			Nickname:"api-manager-backend-1",
+			PodIP:"10.100.100.100",
+		},
+	}
+}
+
 var svcIndex = map[string][]*object.Service{
 	"svc1.testns": {
 		{

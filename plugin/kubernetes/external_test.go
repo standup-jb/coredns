@@ -134,3 +134,6 @@ func testRequest(name string) request.Request {
 	m := new(dns.Msg).SetQuestion(name, dns.TypeA)
 	return request.Request{W: &test.ResponseWriter{}, Req: m, Zone: "example.org."}
 }
+
+func (external) PodNicknameIndex(nickname string) []*object.Pod{return nil}
+

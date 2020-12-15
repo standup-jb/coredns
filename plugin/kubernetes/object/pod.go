@@ -16,6 +16,7 @@ type Pod struct {
 	PodIP     string
 	Name      string
 	Namespace string
+	Nickname  string
 
 	*Empty
 }
@@ -33,6 +34,7 @@ func ToPod(obj meta.Object) (meta.Object, error) {
 		PodIP:     apiPod.Status.PodIP,
 		Namespace: apiPod.GetNamespace(),
 		Name:      apiPod.GetName(),
+		Nickname:  apiPod.Annotations["NICKNAME"],
 	}
 	t := apiPod.ObjectMeta.DeletionTimestamp
 	if t != nil && !(*t).Time.IsZero() {
@@ -55,6 +57,7 @@ func (p *Pod) DeepCopyObject() runtime.Object {
 		PodIP:     p.PodIP,
 		Namespace: p.Namespace,
 		Name:      p.Name,
+		Nickname:  p.Nickname,
 	}
 	return p1
 }
@@ -76,3 +79,8 @@ func (p *Pod) GetResourceVersion() string { return p.Version }
 
 // SetResourceVersion implements the metav1.Object interface.
 func (p *Pod) SetResourceVersion(version string) {}
+
+// Get NickName
+func (p *Pod) GetNickname() string {
+	return p.Nickname
+}
