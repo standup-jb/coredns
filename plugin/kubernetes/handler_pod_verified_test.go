@@ -2,6 +2,8 @@ package kubernetes
 
 import (
 	"context"
+	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/coredns/coredns/plugin/pkg/dnstest"
@@ -79,4 +81,11 @@ func TestServeDNSModeVerified(t *testing.T) {
 			t.Error(err)
 		}
 	}
+}
+
+
+func TestDot(t *testing.T){
+	fmt.Print(strings.HasSuffix("abc.","."))
+	fmt.Print(strings.HasSuffix("abc","." ))
+	fmt.Print("abcd"+".")
 }

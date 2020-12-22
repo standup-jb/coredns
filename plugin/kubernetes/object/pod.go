@@ -3,6 +3,7 @@ package object
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	api "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -29,12 +30,20 @@ func ToPod(obj meta.Object) (meta.Object, error) {
 	if !ok {
 		return nil, fmt.Errorf("unexpected object %v", obj)
 	}
+
+	nickname := apiPod.Annotations["NICKNAME"]
+	if len(nickname) > 1 {
+		if ok := strings.HasSuffix(nickname, "."); !ok {
+			nickname = nickname + "."
+		}
+	}
+
 	pod := &Pod{
 		Version:   apiPod.GetResourceVersion(),
 		PodIP:     apiPod.Status.PodIP,
 		Namespace: apiPod.GetNamespace(),
 		Name:      apiPod.GetName(),
-		Nickname:  apiPod.Annotations["NICKNAME"],
+		Nickname:  nickname,
 	}
 	t := apiPod.ObjectMeta.DeletionTimestamp
 	if t != nil && !(*t).Time.IsZero() {

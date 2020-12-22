@@ -375,7 +375,7 @@ func (k *Kubernetes) findPods(r recordRequest, zone string) (pods []msg.Service,
 		}
 	}
 
-
+	podname = podname + ".default.pod.xmly.local."
 	fmt.Printf("Pod nickname %s \n",podname)
 	// 处理 {APP_NAME}-{NUM} 情况。这里是特殊的处理
 	for _, p:= range k.APIConn.PodNicknameIndex(podname){
@@ -389,7 +389,7 @@ func (k *Kubernetes) findPods(r recordRequest, zone string) (pods []msg.Service,
 			err = nil
 		}
 	}
-
+	fmt.Printf("response %v \n",pods)
 	return pods, err
 }
 
